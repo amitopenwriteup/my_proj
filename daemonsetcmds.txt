@@ -1,0 +1,14 @@
+If you update DaemonSets using configuration files, use kubectl apply:
+
+kubectl apply -f https://k8s.io/examples/controllers/fluentd-daemonset-update.yaml
+
+Imperative commands
+If you update DaemonSets using imperative commands, use kubectl edit :
+
+kubectl edit ds/fluentd-elasticsearch -n kube-system
+
+
+Updating only the container image
+If you only need to update the container image in the DaemonSet template, i.e. .spec.template.spec.containers[*].image, use kubectl set image:
+
+kubectl set image ds/fluentd-elasticsearch fluentd-elasticsearch=quay.io/fluentd_elasticsearch/fluentd:v2.6.0

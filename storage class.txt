@@ -1,0 +1,89 @@
+storage provisioner
+
+
+setting nfs server
+
+Installing nfs server from apt repository
+
+sudo apt update
+sudo apt install nfs-kernel-server
+sudo apt install nfs-common
+
+Making a directory in host machine where PersistentVolumeClaim (PVC) will be created
+
+sudo mkdir /srv/nfs/kubedata -p
+
+
+
+Now we will edit the exports file and add the directory 
+which we created earlier step in order to export it into the remote machine
+
+sudo vi /etc/exports
+
+/srv/nfs/kubedata    *(rw,sync,no_subtree_check,no_root_squash,no_all_squash,insecure)
+
+sudo systemctl enable nfs-server
+sudo systemctl start nfs-server
+sudo systemctl status nfs-server
+
+sudo exportfs -rav
+
+Install NFS client packages in nodes
+
+Add the stable repository in Helm repo and update
+$ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+$ helm repo update
+
+$ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=157.245.108.248 --set nfs.path=/srv/nfs/kubedata 
+
+ Verifying the deployed storageclass
+
+kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+
+kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+$ kubectl get storageclass                                                                                                      
+
+NAME                   PROVISIONER                            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+nfs-client (default)   cluster.local/nfs-client-provisioner   Delete          Immediate              true                   83m
+standard               rancher.io/local-path                  Delete          WaitForFirstConsumer   false                  110m
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvctest
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+
+$ kubectl create -f pvc-nfs.yaml
+persistentvolumeclaim/pvctest created
+
+$ kubectl get pvc,pv
+NAME                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/pvctest   Bound    pvc-2e5dab38-6ec0-4236-8c2b-54717e63108e   100Mi      RWX            nfs-client     2m57s
+
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+persistentvolume/pvc-2e5dab38-6ec0-4236-8c2b-54717e63108e   100Mi      RWX            Delete           Bound    default/pvctest   nfs-client              2m57s
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+spec:
+  volumes:
+  - name: myvol
+    persistentVolumeClaim:
+      claimName: pvctest
+  containers:
+  - image: busybox
+    name: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 600"]
+    volumeMounts:
+    - name: myvol
+      mountPath: /data

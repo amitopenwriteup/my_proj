@@ -1,0 +1,40 @@
+Install the metrics server
+1. The Kubernetes metrics server is an aggregator of resource usage data in your cluster.
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+
+Create a simple Apache webserver application with the following command.
+
+kubectl run httpd --image=httpd --requests=cpu=100m --limits=cpu=200m
+
+
+We can run it as a comment
+kubectl autoscale deployment httpd --cpu-percent=50 --min=1 --max=10 
+
+Create a hpa.yaml file.
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: httpd
+spec:
+ maxReplicas: 10
+ minReplicas: 1
+ scaleTargetRef:
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ name: hppd
+ targetCPUUtilizationPercentage: 50
+
+
+Describe the autoscaler with the following command to view its details.
+
+kubectl describe hpa/httpd
+
+Create a load for the webserver. The following command uses the Apache Bench program to send hundreds of thousands of requests to the httpd server
+
+kubectl run apache-bench -i --tty --rm --image=httpd -- ab -n 500000 
+
+ Watch the httpd deployment scale out while the load is generated. To watch the deployment and the autoscaler, periodically run the following command.
+
+kubectl get horizontalpodautoscaler.autoscaling/httpd

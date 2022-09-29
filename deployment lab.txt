@@ -1,0 +1,107 @@
+deployment lab commnads
+Create the Deployment by running the following command:
+
+kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml
+
+kubectl get deloyment
+
+To see the Deployment rollout status, run kubectl rollout status deployment/nginx-deployment.
+
+The output is similar to:
+
+Waiting for rollout to finish: 2 out of 3 new replicas have been updated...
+deployment "nginx-deployment" successfully rolled out
+
+To see the ReplicaSet (rs) created by the Deployment, run kubectl get rs. The output is similar to this:
+
+NAME                          DESIRED   CURRENT   READY   AGE
+nginx-deployment-75675f5897   3         3         3       18s
+
+To see the labels automatically generated for each Pod, run kubectl get pods --show-labels
+
+
+-------------------lab2
+
+Let's update the nginx Pods to use the nginx:1.16.1 image instead of the nginx:1.14.2 image.
+
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+or use the following command:
+
+kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
+
+Alternatively, you can edit the Deployment and change .spec.template.spec.containers[0].image from nginx:1.14.2 to nginx:1.16.1:
+
+kubectl edit deployment/nginx-deployment
+
+To see the rollout status, run:
+
+kubectl rollout status deployment/nginx-deployment
+
+----------------------------------------------
+
+Lab3
+Suppose that you made a typo while updating the Deployment, by putting the image name as nginx:1.161 instead of nginx:1.16.1:
+
+
+kubectl set image deployment/nginx-deployment nginx=nginx:1.161 
+
+
+The rollout gets stuck. You can verify it by checking the rollout status:
+
+
+kubectl rollout status deployment/nginx-deployment
+
+
+Press Ctrl-C to stop the above rollout status watch
+
+kubectl get rs
+
+
+Looking at the Pods created, you see that 1 Pod created by new ReplicaSet is stuck in an image pull loop.
+
+kubectl get pods
+
+Get the description of the Deployment:
+
+kubectl describe deployment
+
+
+
+Checking Rollout History of a Deployment 
+
+First, check the revisions of this Deployment:
+
+kubectl rollout history deployment/nginx-deployment
+
+
+To see the details of each revision, run:
+
+kubectl rollout history deployment/nginx-deployment --revision=2
+
+
+Rolling Back to a Previous Revision 
+
+Now you've decided to undo the current rollout and rollback to the previous revision:
+
+kubectl rollout undo deployment/nginx-deployment
+
+
+Alternatively, you can rollback to a specific revision by specifying it with --to-revision:
+
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
+
+
+Check if the rollback was successful and the Deployment is running as expected, run:
+
+kubectl get deployment nginx-deployment
+
+------------------------------------
+
+lab 4
+
+You can scale a Deployment by using the following command:
+
+kubectl scale deployment/nginx-deployment --replicas=10
+
+kubectl autoscale deployment/nginx-deployment --min=10 --max=15 --cpu-percent=80
+
