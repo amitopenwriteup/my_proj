@@ -1,0 +1,76 @@
+1) run this command : mkdir -p /mnt/data
+
+create pv.yaml using vi
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume-2
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+
+kubectl create -f pv.yaml
+kubectl get pv
+kubectl describe pv  pv-volume-2
+
+
+create pvc.yaml using 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-claim-2
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+kubectl create -f pvc.yaml
+kubectl get pvc
+
+Map the pvc to the pod name pod-pvc.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: pvc-claim-2
+
+kubectl create -f pod-pvc.yaml
+kubectl get pod
+kubectl describe pod pvc-claim-2
+kubectl exec mypod -it -c myfrontend -- /bin/bash
+
+# you will be logged in continater
+cd /var/www/html
+create a file using below cmd
+touch a
+exit from the pod:
+exit
+
+now go and check cd /mnt/data
+you will able to see it
+
+-----------------
+exercise:
+create a new pvc, where storage require 8Gi, and check its status
