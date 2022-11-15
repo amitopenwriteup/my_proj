@@ -1,9 +1,13 @@
 ingress lab
 
-helm repo add nginx-stable https://helm.nginx.com/stable
-helm repo update
-helm install my-release nginx-stable/nginx-ingress
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
 
+A few pods should start in the ingress-nginx namespace:
+
+
+kubectl get pods --namespace=ingress-nginx
 kind: Pod
 apiVersion: v1
 metadata:
@@ -30,7 +34,7 @@ spec:
     - port: 5678 # Default port for image
 
 
-----------------
+---
 
 kind: Pod
 apiVersion: v1
@@ -57,37 +61,43 @@ spec:
   ports:
     - port: 5678 # Default port for image
 
------------
-
-apiVersion: extensions/v1beta1
+---
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
+  name: demo-localhost
+  namespace: default
 spec:
+  ingressClassName: nginx
   rules:
-  - http:
+  - host: demo.localdev.me
+    http:
       paths:
         - path: /apple
           backend:
-            serviceName: apple-service
-            servicePort: 5678
+            service:
+              name: apple-service
+              port:
+                number: 5678
+          pathType: Prefix
         - path: /banana
           backend:
-            serviceName: banana-service
-            servicePort: 5678
--------------------
+             service:
+               name: banana-service
+               port:
+                 number: 5678
+          pathType: Prefix
 
 
+kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
 
-$ curl -kL http://localhost/apple
+$ curl -kL http://demo.localdev.me:8080/apple
 apple
 
-$ curl -kL http://localhost/banana
+$ curl -kL http://demo.localdev.me:8080/banana
 banana
 
-$ curl -kL http://localhost/notfound
+$ curl -kL http://demo.localdev.me:8080/notfound
 default backend - 404
 
 
