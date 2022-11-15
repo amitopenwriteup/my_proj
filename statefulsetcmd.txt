@@ -1,0 +1,47 @@
+stateful set testing
+
+kubectl get statefulsets
+kubectl describe statefulset web
+
+kubectl get pods
+
+check dns
+
+ kubectl run -it --rm --restart=Never dnsutils2 --image=tutum/dnsutils  --command -- bash
+
+perform nslookup to ip of the pod
+nslookup 10.244.0.5
+
+delete one of the pod 
+kubectl delete pod web-0
+
+then again check
+kubectl get pods -o wide
+
+try again the dns
+
+edit stateful set
+
+kubectl edit statefulset web
+
+make image tag to latest
+
+Image:        registry.k8s.io/nginx-slim:latest
+
+save the stateful set
+
+now check the output
+
+Events:
+  Type    Reason            Age                  From                    Message
+  ----    ------            ----                 ----                    -------
+  Normal  SuccessfulCreate  3m25s (x2 over 13m)  statefulset-controller  create Pod web-0 in StatefulSet web successful
+  Normal  SuccessfulCreate  3m3s (x2 over 12m)   statefulset-controller  create Pod web-1 in StatefulSet web successful
+  Normal  SuccessfulDelete  92s                  statefulset-controller  delete Pod web-2 in StatefulSet web successful
+  Normal  SuccessfulCreate  90s (x2 over 11m)    statefulset-controller  create Pod web-2 in StatefulSet web successful
+root@ubuntu11:~# kubectl get pods -o wide
+NAME    READY   STATUS             RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+web-0   1/1     Running            0          3m35s   10.244.0.8    ubuntu11   <none>           <none>
+web-1   1/1     Running            0          3m13s   10.244.0.9    ubuntu11   <none>           <none>
+web-2   0/1     ImagePullBackOff   0          100s    10.244.0.10   ubuntu11   <none>           <none>
+
