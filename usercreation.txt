@@ -1,0 +1,31 @@
+role and role binding testing
+
+Create a private key for your user. In this example, we will name the file employee.key:
+
+openssl genrsa -out employee.key 2048
+
+Create a certificate sign request employee.csr using the private key you just created (employee.key in this example). Make sure you specify your username and group in the -subj section
+
+openssl req -new -key employee.key -out employee.csr -subj "/CN=employee/O=test"
+
+Generate the final certificate employee.crt by approving the certificate sign request, employee.csr, you made earlier. Make sure you substitute the CA_LOCATION placeholder with the location of your cluster CA. In this example, the certificate will be valid for 500 days:
+
+openssl x509 -req -in employee.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out employee.crt -days 500
+
+kubectl config set-credentials employee --client-certificate=/employee.crt --client-key=/employee.key
+
+Add a new context with the new credentials for your Kubernetes cluster. 
+
+
+kubectl config set-context employee-context --cluster=kubernetes --namespace=default --user=employee
+
+
+kubectl config get-contexts
+
+To use the context
+
+kubectl config use-context employee-context
+kubectl get pods
+kubectl delete pod <name of the pod>
+
+Try rolebinding with kind group dev
