@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: node-app-job
+spec:
+  completions: 7
+  template:
+    spec:
+      containers:
+      - name: node-app-job
+        image: alpine
+        command: ["echo", "Welcome to my Node app"]
+      restartPolicy: Never
+
+
+kubect create -f job.yaml
+kubect
