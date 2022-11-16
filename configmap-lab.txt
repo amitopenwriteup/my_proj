@@ -1,0 +1,132 @@
+create cm-game.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5    
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true  
+
+kubectl create -f cm-game.yaml
+kubectl get cm
+kubectl describe cm game-demo
+
+map the configmap to the pod
+
+create a pod name "cm-pod.yaml"
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-demo-pod
+spec:
+  containers:
+    - name: demo
+      image: alpine
+      command: ["sleep", "3600"]
+      env:
+        # Define the environment variable
+        - name: PLAYER_INITIAL_LIVES # Notice that the case is different here
+                                     # from the key name in the ConfigMap.
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo           # The ConfigMap this value comes from.
+              key: player_initial_lives # The key to fetch.
+        - name: UI_PROPERTIES_FILE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: game-demo
+              key: ui_properties_file_name
+      volumeMounts:
+      - name: config
+        mountPath: "/config"
+        readOnly: true
+  volumes:
+    # You set volumes at the Pod level, then mount them into containers inside that Pod
+    - name: config
+      configMap:
+        # Provide the name of the ConfigMap you want to mount.
+        name: game-demo
+        # An array of keys from the ConfigMap to create as files
+        items:
+        - key: "game.properties"
+          path: "game.properties"
+        - key: "user-interface.properties"
+          path: "user-interface.properties"
+
+kubectl create -f cm-pod.yaml
+kubectl describe pod configmap-demo-pod
+kubectl exec configmap-demo-pod -c demo -it -- /bin/sh
+export 
+
+# check the value
+export
+
+# UI_PROPERTIES_FILE_NAME='user-interface.properties'
+
+
+
+------------------------------------
+
+mkdir -p configs
+cd configs
+create a file app.properties
+environment=production
+logging=INFO
+logs_path=$APP_HOME/logs/
+parllel_jobs=3
+wait_time=30sec
+
+cat app.properties
+
+kubectl create configmap app-config --from-file configs/app.properties --namespace=default
+
+list configmaps
+
+kubectl get configmap/app-config
+
+kubectl describe configmap/app-config
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  containers:
+    - name: my-app
+      image: nginx:latest
+      env:
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: environment
+        - name: LOG_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: logging
+        - name: LOG_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: logs_path
+        - name: THREDS_CLOUNT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: parllel_jobs
+
+
+
