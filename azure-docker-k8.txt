@@ -1,0 +1,37 @@
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+ echo \
+ "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+
+
+sudo apt -y install curl apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+sudo apt update
+sudo apt -y install vim git curl wget kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl 
+swapoff -a
+rm /etc/containerd/config.toml
+systemctl restart containerd
+
+
+kubeadm init --pod-network-cidr=10.244.0.0/16
+
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf /root/.kube/config
+  sudo chown $(id -u):$(id -g) /root/.kube/config
+
+
+wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+
+------logs------------
+
