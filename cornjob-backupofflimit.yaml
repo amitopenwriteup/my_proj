@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hellocron
+spec:
+  schedule: "*/1 * * * *" #Runs every 3 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hellocron
+            image: nginx
+            args:
+            -  /bin/touch 
+            -  /etc/os
+	    -  /bin/cat
+            -  /etc/os
+          restartPolicy: Never
+      backoffLimit: 5
+  suspend: false
