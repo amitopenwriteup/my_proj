@@ -81,7 +81,7 @@ export
 
 mkdir -p configs
 cd configs
-create a file app.properties
+create a file app.properties using vi editor
 environment=production
 logging=INFO
 logs_path=$APP_HOME/logs/
@@ -92,7 +92,7 @@ cat app.properties
 
 kubectl create configmap app-config --from-file configs/app.properties --namespace=default
 
-list configmaps
+#list configmaps using below commands
 
 kubectl get configmap/app-config
 
