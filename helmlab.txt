@@ -27,7 +27,7 @@ create helm chart
 
 2) cd testchart
 
-3) ls testchart
+3) ls 
 
 4) Cleanup all the files inside templates directory so that we will start from scratch
 
