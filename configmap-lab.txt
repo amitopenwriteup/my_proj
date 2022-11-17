@@ -90,7 +90,7 @@ wait_time=30sec
 
 cat app.properties
 
-kubectl create configmap app-config --from-file configs/app.properties --namespace=default
+kubectl create configmap app-config --from-file app.properties --namespace=default
 
 #list configmaps using below commands
 
