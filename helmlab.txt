@@ -1,0 +1,77 @@
+helm installation
+
+wget https://get.helm.sh/helm-v3.10.2-linux-amd64.tar.gz
+tar -zxvf helm-v3.10.2-linux-amd64.tar.gz
+mv linux-amd64/helm /usr/local/bin/helm
+
+helm version
+helm env
+
+To list repo
+
+helm repo list
+
+To add a repo
+helm repo add <repo> url
+helm repo add stable https://charts.helm.sh/stable
+
+Search a repo
+$ helm search repo mysql
+
+
+-----------
+
+create helm chart
+
+1) helm create testchart
+
+2) cd testchart
+
+3) ls testchart
+
+4) Cleanup all the files inside templates directory so that we will start from scratch
+
+rm -rf templates/*
+
+5) Create deployment file
+
+kubectl create deployment nginx --image=nginx --dry-run=client -o yaml >> templates/deployment.yaml
+
+6) create a deployment to expose service
+kubectl create deployment nginx --image=nginx                                                      
+
+kubectl expose deploy nginx --port 80 --type NodePort --dry-run=client -o yaml > templates/service.yaml
+
+7) define only the required values inside Chart.yaml
+cat Chart.yaml    
+
+8)One more additional file, need to create is NOTES.txt inside templates directory
+
+echo "This is first helm chart and it will deploy nginx application" >>templates/NOTES.txt
+
+9)cleanup rest of the files and directory to draw the clean slate
+rm -rf values.yaml charts
+
+10)It always a good idea to run linter before deploying your chart to make sure there is no syntax error or your are following all the best practices
+
+ helm lint ./testchart
+
+11) delete the deployment
+
+kubectl delete deployment nginx
+
+12)Do the dry run
+ helm install testchart ./testchart --dry-run
+
+13) install
+
+helm install testchart ./testchart
+
+14) check
+
+helm list
+
+
+15) package
+helm package testchart/
+Successfully packaged chart and saved it to: /root/testchart-0.1.0.tgz
