@@ -15,6 +15,7 @@ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 sudo apt update
 sudo apt -y install vim git curl wget kubelet kubeadm kubectl
+####below command hold: It will prevent the package from upgrade.
 sudo apt-mark hold kubelet kubeadm kubectl 
 swapoff -a
 rm /etc/containerd/config.toml
