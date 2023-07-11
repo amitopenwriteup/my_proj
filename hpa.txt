@@ -1,7 +1,51 @@
 Install the metrics server
 1. The Kubernetes metrics server is an aggregator of resource usage data in your cluster.
 
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+Yes, to enable Horizontal Pod Autoscaling (HPA) with custom metrics in Kubernetes, you need to have the Metrics Server installed in your cluster. 
+The Metrics Server is a component that collects resource utilization data (such as CPU and memory) from the cluster's nodes and provides 
+it as metrics to other Kubernetes components, including the Horizontal Pod Autoscaler.
+
+Here's how you can install the Metrics Server in your Kubernetes cluster:
+
+Step 1: Download the Metrics Server manifest
+```
+wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+Step 2: Modify the Metrics Server manifest
+Open the downloaded `components.yaml` file and find the `metrics-server` Deployment definition. Add the following flags under the `containers` section of the Deployment:
+
+```yaml
+args:
+  - --kubelet-insecure-tls
+  - --kubelet-preferred-address-types=InternalIP
+  - --kubelet-use-node-status-port
+```
+
+This configuration allows the Metrics Server to connect securely with the Kubernetes API server and fetch the necessary metrics.
+
+Step 3: Deploy the Metrics Server
+Apply the modified `components.yaml` file to deploy the Metrics Server in your cluster:
+```
+kubectl apply -f components.yaml
+```
+
+Step 4: Verify the Metrics Server deployment
+Check if the Metrics Server components are running:
+```
+kubectl get deployment metrics-server -n kube-system
+kubectl get pods -n kube-system | grep metrics-server
+```
+
+Once the Metrics Server is running, it starts collecting metrics from the cluster nodes. The Horizontal Pod Autoscaler can then utilize these metrics to make scaling decisions based on resource utilization.
+
+After installing the Metrics Server, you can proceed with creating HPA objects that use custom metrics to scale your applications.
+
+Note: The above steps assume you have the necessary permissions to deploy resources in the cluster. If you encounter any issues during the installation or verification process, please ensure you have the appropriate permissions or consult with your cluster administrator.
+
+Let me know if you need any further assistance!
 
 Create a simple Apache webserver application with the following command.
 

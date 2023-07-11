@@ -74,3 +74,19 @@ you will able to see it
 -----------------
 exercise:
 create a new pvc, where storage require 8Gi, and check its status
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - name: emptydir-volume
+          mountPath: /tmp
+  volumes:
+    - name: emptydir-volume
+      emptyDir: {}

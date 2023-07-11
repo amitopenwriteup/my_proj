@@ -34,7 +34,7 @@ Add the stable repository in Helm repo and update
 $ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
 $ helm repo update
 
-$ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=157.245.108.248 --set nfs.path=/srv/nfs/kubedata 
+$ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=107.23.190.61 --set nfs.path=/srv/nfs/kubedata 
 
  Verifying the deployed storageclass
 
@@ -47,6 +47,8 @@ $ kubectl get storageclass
 NAME                   PROVISIONER                            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 nfs-client (default)   cluster.local/nfs-client-provisioner   Delete          Immediate              true                   83m
 standard               rancher.io/local-path                  Delete          WaitForFirstConsumer   false                  110m
+
+kubectl get storageclass nfs-client   -o yaml
 
 apiVersion: v1
 kind: PersistentVolumeClaim
