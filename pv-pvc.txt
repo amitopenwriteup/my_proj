@@ -58,7 +58,7 @@ spec:
 
 kubectl create -f pod-pvc.yaml
 kubectl get pod
-kubectl describe pod pvc-claim-2
+kubectl describe pod mypod
 kubectl exec mypod -it -c myfrontend -- /bin/bash
 
 # you will be logged in continater
