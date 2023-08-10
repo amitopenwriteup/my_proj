@@ -19,5 +19,5 @@ spec:
     spec:
       containers:
         - name: my-app-container
-          image: nginx:1.14.2
+          image: your-image:tag
           # Add container specifications such as ports, resources, etc.
