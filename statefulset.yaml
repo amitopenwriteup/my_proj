@@ -21,14 +21,12 @@ spec:
     matchLabels:
       app: nginx # has to match .spec.template.metadata.labels
   serviceName: "nginx"
-  replicas: 3 # by default is 1
-  minReadySeconds: 10 # by default is 0
+  replicas: 3 # by default is 
   template:
     metadata:
       labels:
         app: nginx # has to match .spec.selector.matchLabels
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
       - name: nginx
         image: registry.k8s.io/nginx-slim:0.8
