@@ -9,10 +9,14 @@ Create a certificate sign request employee.csr using the private key you just cr
 openssl req -new -key employee.key -out employee.csr -subj "/CN=employee/O=test"
 
 Generate the final certificate employee.crt by approving the certificate sign request, employee.csr, you made earlier. Make sure you substitute the CA_LOCATION placeholder with the location of your cluster CA. In this example, the certificate will be valid for 500 days:
-
+(In you are using kubeadm, please use below steps)
 openssl x509 -req -in employee.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out employee.crt -days 500
 
-kubectl config set-credentials employee --client-certificate=/employee.crt --client-key=/employee.key
+openshift case please use:
+openssl x509 -req -in employee.csr -CA /root/openshift.local.clusterup/openshift-apiserver/ca.crt  -CAkey /root/openshift.local.clusterup/openshift-apiserver/ca.key -CAcreateserial -out employee.crt -days 500
+
+
+kubectl config set-credentials employee --client-certificate=employee.crt --client-key=employee.key
 
 Add a new context with the new credentials for your Kubernetes cluster. 
 
