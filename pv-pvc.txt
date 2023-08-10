@@ -47,7 +47,7 @@ metadata:
 spec:
   containers:
     - name: myfrontend
-      image: nginx
+      image: amitow/nginx:1.14.1
       volumeMounts:
       - mountPath: "/var/www/html"
         name: mypd
