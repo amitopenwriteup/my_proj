@@ -19,5 +19,5 @@ spec:
     spec:
       containers:
         - name: my-app-container
-          image: your-image:tag
+          image: amitow/nginx:1.14.1
           # Add container specifications such as ports, resources, etc.
