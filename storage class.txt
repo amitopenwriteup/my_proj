@@ -42,9 +42,6 @@ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs
 
  #Verifying the deployed storageclass
 
-kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
-
-kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
 kubectl get storageclass                                                                                                      
 
@@ -68,7 +65,7 @@ spec:
     requests:
       storage: 100Mi
 
-kubectl create -f pvc-nfs.yaml
+kubectl create -f nfsclaim.yaml
 persistentvolumeclaim/pvctest created
 
 kubectl get pvc,pv
