@@ -1,22 +1,22 @@
-storage provisioner
+#storage provisioner
 
 
-setting nfs server
+#setting nfs server
 
-Installing nfs server from apt repository
+#Installing nfs server from apt repository
 
 sudo apt update
 sudo apt install nfs-kernel-server
 sudo apt install nfs-common
 
-Making a directory in host machine where PersistentVolumeClaim (PVC) will be created
+#Making a directory in host machine where PersistentVolumeClaim (PVC) will be created
 
 sudo mkdir /srv/nfs/kubedata -p
 
 
 
-Now we will edit the exports file and add the directory 
-which we created earlier step in order to export it into the remote machine
+#Now we will edit the exports file and add the directory 
+#which we created earlier step in order to export it into the remote machine
 
 sudo vi /etc/exports
 
@@ -28,21 +28,25 @@ sudo systemctl status nfs-server
 
 sudo exportfs -rav
 
-Install NFS client packages in nodes
+#Install NFS client packages in nodes
+wget https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz
+tar -zxvf helm-v3.13.2-linux-amd64.tar.gz
+mv linux-amd64/helm /usr/local/bin/helm
 
-Add the stable repository in Helm repo and update
-$ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
-$ helm repo update
+#Add the stable repository in Helm repo and update
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
 
-$ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=107.23.190.61 --set nfs.path=/srv/nfs/kubedata 
+helm repo update
+#PRovide ip of your nfs server
+helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=<ipaddrof machine> --set nfs.path=/srv/nfs/kubedata 
 
- Verifying the deployed storageclass
+ #Verifying the deployed storageclass
 
 kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 
 kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
-$ kubectl get storageclass                                                                                                      
+kubectl get storageclass                                                                                                      
 
 NAME                   PROVISIONER                            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 nfs-client (default)   cluster.local/nfs-client-provisioner   Delete          Immediate              true                   83m
@@ -50,6 +54,8 @@ standard               rancher.io/local-path                  Delete          Wa
 
 kubectl get storageclass nfs-client   -o yaml
 
+vi nfsclaim.yaml
+#copy-paste below data
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -62,16 +68,19 @@ spec:
     requests:
       storage: 100Mi
 
-$ kubectl create -f pvc-nfs.yaml
+kubectl create -f pvc-nfs.yaml
 persistentvolumeclaim/pvctest created
 
-$ kubectl get pvc,pv
+kubectl get pvc,pv
 NAME                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 persistentvolumeclaim/pvctest   Bound    pvc-2e5dab38-6ec0-4236-8c2b-54717e63108e   100Mi      RWX            nfs-client     2m57s
 
 NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
 persistentvolume/pvc-2e5dab38-6ec0-4236-8c2b-54717e63108e   100Mi      RWX            Delete           Bound    default/pvctest   nfs-client              2m57s
 
+#Create a pod
+vi podnfs.yaml
+#Copy paste below code
 apiVersion: v1
 kind: Pod
 metadata:
