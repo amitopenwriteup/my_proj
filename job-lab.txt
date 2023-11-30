@@ -1,3 +1,4 @@
+#Create a yaml file job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -18,9 +19,9 @@ kubectl get job node-app-job -w
 kubectl describe job node-app-job
 kubectl delete -f job.yaml
 
-modify job.yaml
+#modify job.yaml
 
-Add parallelism
+#Add parallelism
 
 apiVersion: batch/v1
 kind: Job
