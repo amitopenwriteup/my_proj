@@ -50,7 +50,7 @@ cat Chart.yaml
 echo "This is first helm chart and it will deploy nginx application" >>templates/NOTES.txt
 
 9)#cleanup rest of the files and directory to draw the clean slate
-rm -rf values.yaml charts
+
 
 10)#It always a good idea to run linter before deploying your chart to make sure there is no syntax error or your are following all the best practices
 
@@ -59,19 +59,25 @@ rm -rf values.yaml charts
 11) #delete the deployment
 
 kubectl delete deployment nginx
-
+kubectl delete svc nginx
 12)#Do the dry run
  helm install testchart ./testchart --dry-run
 
 13) #install
 
 helm install testchart ./testchart
+#Check service and deployment
+kubectl get deployment
+kubectl get svc
 
 14) #check
-
 helm list
-
 
 15) #package
 helm package testchart/
 #Successfully packaged chart and saved it to: /root/testchart-0.1.0.tgz
+16) #Uninstall
+helm uninstall testchart
+#Check service and deployment
+kubectl get svc
+kubectl get deployment
