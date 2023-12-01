@@ -50,7 +50,7 @@ cat Chart.yaml
 echo "This is first helm chart and it will deploy nginx application" >>templates/NOTES.txt
 
 9)#cleanup rest of the files and directory to draw the clean slate
-
+cd ..
 
 10)#It always a good idea to run linter before deploying your chart to make sure there is no syntax error or your are following all the best practices
 
