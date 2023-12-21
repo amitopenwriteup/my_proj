@@ -10,34 +10,34 @@ it as metrics to other Kubernetes components, including the Horizontal Pod Autos
 Here's how you can install the Metrics Server in your Kubernetes cluster:
 
 Step 1: Download the Metrics Server manifest
-```
+
 wget https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-```
+
 
 Step 2: Modify the Metrics Server manifest
 Open the downloaded `components.yaml` file and find the `metrics-server` Deployment definition. Add the following flags under the `containers` section of the Deployment:
 
-```yaml
+yaml
 args:
   - --kubelet-insecure-tls
   - --kubelet-preferred-address-types=InternalIP
   - --kubelet-use-node-status-port
-```
+
 
 This configuration allows the Metrics Server to connect securely with the Kubernetes API server and fetch the necessary metrics.
 
 Step 3: Deploy the Metrics Server
 Apply the modified `components.yaml` file to deploy the Metrics Server in your cluster:
-```
+
 kubectl apply -f components.yaml
-```
+
 
 Step 4: Verify the Metrics Server deployment
 Check if the Metrics Server components are running:
-```
+
 kubectl get deployment metrics-server -n kube-system
 kubectl get pods -n kube-system | grep metrics-server
-```
+
 
 Once the Metrics Server is running, it starts collecting metrics from the cluster nodes. The Horizontal Pod Autoscaler can then utilize these metrics to make scaling decisions based on resource utilization.
 
