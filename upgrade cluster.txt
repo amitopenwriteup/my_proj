@@ -1,0 +1,83 @@
+-Upgrade the cluster
+
+Steps:
+
+Upgrade kubeadm on the Control Plane node
+Drain the Control Plane node
+Plan the upgrade (kubeadm upgrade plan)
+Apply the upgrade (kubeadm upgrade apply)
+Upgrade kubelet & kubectl on the control Plane node
+Uncordon the Control Plane node
+
+-Update kubeadm
+apt-get update && apt-get install -y kubeadm=1.20.1-00
+
+kubeadm upgrade plan
+
+-Drain the control plane node:
+
+kubectl drain okdmaster --ignore-daemonsets --delete-local-data
+
+-On the control plane node, run:
+
+kubeadm upgrade apply v1.20.1
+
+- Uncordon the control plane node:
+
+kubectl uncordon okdmaster
+
+- Upgrade kubelet and kubectl
+
+ apt-get update && apt-get install -y kubelet=1.20.1-00 kubectl=1.20.1-00
+
+-Restart kubelet
+systemctl daemon-reload
+systemctl restart kubelet
+
+-Check version
+
+kubectl get nodes
+NAME        STATUS   ROLES                  AGE     VERSION
+okdclient   Ready    <none>                 2d22h   v1.19.4
+okdmaster   Ready    control-plane,master   2d22h   v1.20.1
+
+
+
+
+On worker node
+
+Drain the node
+Upgrade kubeadm on the node
+Upgrade the kubelet configuration (kubeadm upgrade node)
+Upgrade kubelet & kubectl
+Uncordon the node
+
+
+
+-Update kubeadm
+apt-get update && apt-get install -y kubeadm=1.20.1-00
+
+
+-Drain the control plane node:
+
+ kubectl drain okdclient --ignore-daemonsets
+
+-On the  node, run:
+
+kubeadm upgrade node
+
+- Upgrade kubelet and kubectl
+
+ apt-get update && apt-get install -y kubelet=1.20.1-00 kubectl=1.20.1-0
+
+-Restart service
+
+systemctl daemon-reload
+systemctl restart kubelet
+
+-Unconrdon
+
+kubectl uncordon okdclient
+
+- check status
+kubectl status kubelet
