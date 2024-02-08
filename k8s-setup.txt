@@ -38,11 +38,11 @@ curl https://docs.projectcalico.org/v3.10/manifests/calico.yaml -O
 POD_CIDR="<your-pod-cidr>" \
 sed -i -e "s?10.244.0.0/16?$POD_CIDR?g" calico.yaml
 
-Step 5 Install Network Addon (flannel):
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-Location of Manifest files for K8s components:
-cd /etc/kubernetes/manifests
+#Step 5 Install Network Addon (flannel):
+#kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#Location of Manifest files for K8s components:
 
 
-https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+
+
 
