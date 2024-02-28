@@ -16,4 +16,4 @@ spec:
               image: busybox
               name: hello
           restartPolicy: OnFailure
-  schedule: "0 * 
+  schedule: "* * * * *"
