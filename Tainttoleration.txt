@@ -1,0 +1,23 @@
+1) kubectl get nodes
+
+2)kubectl taint nodes <node-name> <key>=<value>:NoSchedule
+
+3)kubectl taint nodes node1 example-key=example-value:NoSchedule-
+
+4)create a pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tolerant-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+    value: "value1"
+    effect: "NoSchedule"
+~
+~
+
