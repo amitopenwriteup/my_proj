@@ -1,13 +1,8 @@
-ingress lab
-
-helm repo add nginx https://helm.nginx.com/stable
-
-helm install my-nginx-ingress nginx/nginx-ingress --version 1.1.3
-
-A few pods should start in the ingress-nginx namespace:
-
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
 
 kubectl get pods --namespace=ingress-nginx
+
+
 kind: Pod
 apiVersion: v1
 metadata:
