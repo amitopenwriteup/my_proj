@@ -15,9 +15,6 @@ sudo dnf install -y nfs-utils
 #Making a directory in host machine where PersistentVolumeClaim (PVC) will be created
 
 sudo mkdir /srv/nfs/kubedata -p
-
-
-
 #Now we will edit the exports file and add the directory 
 #which we created earlier step in order to export it into the remote machine
 
