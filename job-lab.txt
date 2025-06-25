@@ -19,7 +19,7 @@ kubectl get job node-app-job -w
 kubectl describe job node-app-job
 kubectl delete -f job.yaml
 
-#modify job.yaml
+#create job1.yaml
 
 #Add parallelism
 
@@ -38,11 +38,12 @@ spec:
         command: ["echo", "Welcome to my Node app"]
       restartPolicy: Never
 
-kubectl create -f job.yaml
+kubectl create -f job1.yaml
 kubectl get job node-app-job -w
 kubectl describe job node-app-job
-kubectl delete -f job.yaml
+kubectl delete -f job1.yaml
 
+#create job2.yaml using vi
 
 apiVersion: batch/v1
 kind: Job
@@ -58,10 +59,10 @@ spec:
         command: ["echo", "Welcome to my Node app"]
       restartPolicy: Never
 
-kubectl create -f job.yaml
+kubectl create -f job2.yaml
 kubectl get job node-app-job -w
 kubectl describe job node-app-job
-kubectl delete -f job.yaml
+kubectl delete -f job2.yaml
 
 exercise: increase the number parallelism > completion check the value
 
