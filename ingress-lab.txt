@@ -97,15 +97,15 @@ kubectl create -f ingressrc.yaml
 kubectl get ingress
 kubectl describe ingress demo-localhost
 
-kubectl port-forward service/my-release-nginx-ingress-controller 8080:80
+#Add /etc/hosts
+<ipaddress of linux>  demo.localdev.me
 
-$ curl -kL http://demo.localdev.me:8080/apple
-apple
+$ curl -kL http://demo.localdev.me/apple
 
-$ curl -kL http://demo.localdev.me:8080/banana
-banana
 
-$ curl -kL http://demo.localdev.me:8080/notfound
-default backend - 404
+$ curl -kL http://demo.localdev.me/banana
+
+
+
 
 
