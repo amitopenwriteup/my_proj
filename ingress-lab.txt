@@ -61,6 +61,7 @@ spec:
   ports:
     - port: 5678 # Default port for image
 
+#Create another yaml for ingress
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -88,6 +89,9 @@ spec:
                  number: 5678
           pathType: Prefix
 
+
+kubectl get ingress
+kubectl describe ingress demo-localhost
 
 kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
 
