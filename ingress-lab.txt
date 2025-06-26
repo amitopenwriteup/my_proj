@@ -96,7 +96,8 @@ spec:
 kubectl create -f ingressrc.yaml
 kubectl get ingress
 kubectl describe ingress demo-localhost
-
+#You provision using kind
+kubectl port-forward svc/<ingresscontrollersvc name> 80:80
 #Add /etc/hosts
 <ipaddress of linux>  demo.localdev.me
 
