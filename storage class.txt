@@ -10,7 +10,7 @@ sudo apt install nfs-kernel-server
 sudo apt install nfs-common
 
 #For rocky linux
-sudo dnf install -y nfs-utils
+#sudo dnf install -y nfs-utils
 
 #Making a directory in host machine where PersistentVolumeClaim (PVC) will be created
 
@@ -95,3 +95,4 @@ spec:
     volumeMounts:
     - name: myvol
       mountPath: /data
+
