@@ -97,6 +97,7 @@ kubectl create -f ingressrc.yaml
 kubectl get ingress
 kubectl describe ingress demo-localhost
 #You provision using kind
+kubectl get svc
 kubectl port-forward svc/<ingresscontrollersvc name> 80:80
 #Add /etc/hosts
 <ipaddress of linux>  demo.localdev.me
@@ -105,6 +106,7 @@ $ curl -kL http://demo.localdev.me/apple
 
 
 $ curl -kL http://demo.localdev.me/banana
+
 
 
 
