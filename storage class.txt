@@ -22,11 +22,13 @@ sudo vi /etc/exports
 
 /srv/nfs/kubedata    *(rw,sync,no_subtree_check,no_root_squash,no_all_squash,insecure)
 
+#save the file
 sudo systemctl enable nfs-server
 sudo systemctl start nfs-server
 sudo systemctl status nfs-server
 
 sudo exportfs -rav
+#output :/srv/nfs/kubedata 
 
 #Install NFS client packages in nodes
 wget https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz
@@ -95,4 +97,5 @@ spec:
     volumeMounts:
     - name: myvol
       mountPath: /data
+
 
