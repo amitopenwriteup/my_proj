@@ -1,0 +1,160 @@
+
+1. Which Kubernetes resource is used to define the desired state of a set of identical pods?
+   a) Deployment
+   b) Service
+   c) ReplicaSet
+   d) StatefulSet
+
+   Answer: a) Deployment
+
+2. What is the purpose of a ConfigMap in Kubernetes?
+   a) To store sensitive information securely
+   b) To define the resource requirements of a pod
+   c) To manage environment variables and configuration data
+   d) To provide persistent storage for pods
+
+   Answer: c) To manage environment variables and configuration data
+
+3. How can you create a ConfigMap in Kubernetes?
+   a) By using the `kubectl create configmap` command
+   b) By updating the YAML file of a pod
+   c) By creating a PersistentVolume (PV)
+   d) By using the `kubectl apply` command with a ConfigMap YAML file
+
+   Answer: a) By using the `kubectl create configmap` command
+
+4. What is a PersistentVolume (PV) in Kubernetes?
+   a) A volume that is attached to a specific pod
+   b) A type of storage that is shared among multiple pods
+   c) A volume that persists data beyond the lifetime of a pod
+   d) A type of volume that is automatically created by Kubernetes
+
+   Answer: c) A volume that persists data beyond the lifetime of a pod
+
+5. How can you assign a PersistentVolume (PV) to a PersistentVolumeClaim (PVC)?
+   a) By using the `kubectl assign` command
+   b) By updating the YAML file of a pod
+   c) By using the `kubectl bind` command
+   d) By creating a StorageClass
+
+   Answer: c) By using the `kubectl bind` command
+
+6. What is the purpose of a taint in Kubernetes?
+   a) To restrict which pods can be scheduled on a node
+   b) To provide load balancing for services
+   c) To monitor the health of pods and nodes
+   d) To handle API requests from the Kubernetes control plane
+
+   Answer: a) To restrict which pods can be scheduled on a node
+
+7. How can you add a taint to a node in Kubernetes?
+   a) By using the `kubectl add taint` command
+   b) By updating the YAML file of a pod
+   c) By using the `kubectl taint node` command
+   d) By creating a Taint resource
+
+   Answer: c) By using the `kubectl taint node` command
+
+8. What is the purpose of pod affinity in Kubernetes?
+   a) To specify the required resources for a pod
+   b) To define the desired state of a pod
+   c) To determine the node where a pod should be scheduled
+   d) To provide persistent storage for pods
+
+   Answer: c) To determine the node where a pod should be scheduled
+
+9. How can you define pod affinity in Kubernetes?
+   a) By using the `kubectl apply` command with an affinity YAML file
+   b) By updating the YAML file of a pod
+   c) By using the `kubectl set affinity` command
+   d) By creating an Affinity resource
+
+   Answer: b) By updating the YAML file of a pod
+
+10. What is the purpose of node affinity in Kubernetes?
+    a) To specify the required resources for a pod
+    b) To define the desired state of a pod
+    c) To determine the node where a pod should be scheduled
+    d) To provide persistent storage for pods
+
+    Answer: c) To determine the node where a pod should be scheduled
+
+11. How can you define node affinity in Kubernetes?
+    a) By using the `kubectl apply` command with an affinity YAML file
+    b) By updating the YAML file of a pod
+    c) By using the `kubectl set affinity` command
+    d) By creating an Affinity resource
+
+    Answer: a) By using the `kubectl apply` command with an affinity YAML file
+
+12. Which Kubernetes resource is responsible for managing the lifecycle of a pod and its associated resources?
+    a) Deployment
+    b) Service
+    c) StatefulSet
+    d) ReplicaSet
+
+    Answer: a) Deployment
+
+13. How can you update a Deployment in Kubernetes to use a new image?
+    a) By using the `kubectl update deployment` command
+    b) By updating the YAML file of the Deployment and applying changes
+    c) By using the `kubectl scale deployment` command
+    d) By creating a new Deployment with the updated image
+
+    Answer: b) By updating the YAML file of the Deployment and applying changes
+
+14. What is the purpose of a readiness probe in a pod specification?
+    a) To determine when a pod is ready to accept traffic
+    b) To monitor the resource usage of a pod
+    c) To scale the number of replicas in a pod
+    d) To provide external access to the pod
+
+    Answer: a) To determine when a pod is ready to accept traffic
+
+15. Which Kubernetes resource is used to expose a Deployment to network traffic?
+    a) Service
+    b) ConfigMap
+    c) PersistentVolumeClaim (PVC)
+    d) ReplicaSet
+
+    Answer: a) Service
+
+16. How can you specify the number of replicas for a Deployment in Kubernetes?
+    a) By using the `kubectl scale` command
+    b) By updating the YAML file of the Deployment and applying changes
+    c) By using the `kubectl create` command with a replica flag
+    d) By creating a new Deployment with the desired number of replicas
+
+    Answer: b) By updating the YAML file of the Deployment and applying changes
+
+17. What is the purpose of the `kubectl describe` command?
+    a) To create a new Kubernetes resource
+    b) To view detailed information about a Kubernetes resource
+    c) To delete a Kubernetes resource
+    d) To apply changes to a Kubernetes resource
+
+    Answer: b) To view detailed information about a Kubernetes resource
+
+18. How can you define resource requirements (CPU and memory) for a pod in Kubernetes?
+    a) By using the `kubectl apply` command with resource flags
+    b) By updating the YAML file of the pod and specifying resource limits
+    c) By using the `kubectl set resources` command
+    d) By creating a ResourceQuota resource
+
+    Answer: b) By updating the YAML file of the pod and specifying resource limits
+
+19. What is the purpose of the `kubectl get` command in Kubernetes?
+    a) To create a new Kubernetes resource
+    b) To view the details of a Kubernetes resource
+    c) To delete a Kubernetes resource
+    d) To apply changes to a Kubernetes resource
+
+    Answer: b) To view the details of a Kubernetes resource
+
+20. Which command can be used to delete a Deployment in Kubernetes?
+    a) `kubectl delete deployment <deployment-name>`
+    b) `kubectl remove deployment <deployment-name>`
+    c) `kubectl stop deployment <deployment-name>`
+    d) `kubectl destroy deployment <deployment-name>`
+
+    Answer: a) `kubectl delete deployment <deployment-name>

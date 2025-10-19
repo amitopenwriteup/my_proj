@@ -1,0 +1,82 @@
+
+1. What is a Terraform module?
+   a) A reusable package of Terraform configurations
+   b) A plugin for Terraform providers
+   c) A command-line tool for managing infrastructure
+   d) A version control system for Terraform configurations
+
+   Answer: a) A reusable package of Terraform configurations
+
+2. What is the primary benefit of using Terraform modules?
+   a) Improved code organization and reusability
+   b) Faster execution of Terraform commands
+   c) Enhanced security for infrastructure resources
+   d) Built-in testing and debugging capabilities
+
+   Answer: a) Improved code organization and reusability
+
+3. Which of the following statements is true about Terraform modules?
+   a) Modules are only available in the Terraform Enterprise edition
+   b) Modules can only be written in the HCL (HashiCorp Configuration Language)
+   c) Modules can be shared and published on the Terraform Registry
+   d) Modules can only be used within a single Terraform project
+
+   Answer: c) Modules can be shared and published on the Terraform Registry
+
+4. What is the recommended directory structure for a Terraform module?
+   a) Only a single .tf file containing all the configurations
+   b) A directory with multiple .tf files and a main.tf file
+   c) A directory containing only variables.tf and outputs.tf files
+   d) A directory with nested subdirectories for each resource type
+
+   Answer: b) A directory with multiple .tf files and a main.tf file
+
+5. How are input variables defined in a Terraform module?
+   a) Using the `variable` block in the main.tf file
+   b) By defining them as environment variables
+   c) By directly passing them as command-line arguments
+   d) Input variables are not supported in Terraform modules
+
+   Answer: a) Using the `variable` block in the main.tf file
+
+6. Which Terraform command is used to download modules from the Terraform Registry?
+   a) terraform get
+   b) terraform init
+   c) terraform plan
+   d) terraform apply
+
+   Answer: b) terraform init
+
+7. What is the purpose of the `outputs.tf` file in a Terraform module?
+   a) It specifies the inputs required for the module
+   b) It defines the output values that will be exposed by the module
+   c) It contains the resource definitions for the module
+   d) The `outputs.tf` file is not necessary for a Terraform module
+
+   Answer: b) It defines the output values that will be exposed by the module
+
+8. How can you reference a module output in another Terraform configuration?
+   a) By using the `output` block in the main.tf file
+   b) By importing the module as a provider in the new configuration
+   c) By using the Terraform Registry API to fetch the output values
+   d) By using the module's namespace followed by the output variable name
+
+   Answer: d) By using the module's namespace followed by the output variable name
+
+9. What is the purpose of the `count` argument in a Terraform module?
+   a) It specifies the number of resources to create from the module
+   b) It defines the number of instances to run in a multi-cloud environment
+   c) It configures the module to run in parallel for improved performance
+   d) The `count` argument is not applicable to Terraform modules
+
+   Answer: a) It specifies the number of resources to create from the module
+
+10. How can you override the default values of variables defined in a Terraform module?
+    a) By modifying the module's source code
+    b) By providing input variable values during module instantiation
+    c) By using the `terraform override` command before applying changes
+    d) Variable values defined in a module cannot be overridden
+
+    Answer: b) By providing input variable values during module instantiation
+
+Please note that the answers provided here are based on general knowledge about Terraform modules, and specific scenarios or versions may have different considerations.

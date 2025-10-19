@@ -1,0 +1,146 @@
+MCQ for Pretest:
+
+1. If we need to run a container in detach mode using docker what is the command?
+
+a. docker run -D nginx
+b. docker run -detach nginx
+c. docker run -d nginx
+d. docker run nginx
+
+c
+
+2. Docker is a daemonless process?
+a. True
+b. False
+
+b
+
+3. If i need to restart docker which service will restart?
+a.docker
+b.container
+c.dockerd
+d.none
+
+c
+
+4. Docker registry is a repository for images?
+a. True
+b. fasle
+
+a
+
+5. Docker image which is correct
+a.mutable
+b.immutable
+c.iso
+d.tar
+
+b
+
+6. Kubernetes minimal unit of computation?
+a. Container
+b. Pod
+c. Deployment
+d. Image
+
+b
+
+7. Docker hub is a registry?
+a. True
+b. False
+
+a
+
+8. yaml stands for
+a. yat another markup language
+b. yaml language
+c. yet another markup language
+d. none
+
+c
+
+9. In pod yaml file, what is kind type?
+a. v1
+b. Pod
+c. Container
+d. none
+
+b
+
+10. docker search command by default search on docker hub?
+a.False
+b.True
+
+b
+
+11. docker run command runs, docker pull internally?
+a. True
+b. False
+
+a
+
+12. which is cli option in kubernetes to create resource?
+a.kubelet
+b.kubectl
+c.kubecreate
+d.kubeadm
+
+b
+
+13. Pod can create multicontainer pod?
+a. True
+b. False
+
+a
+
+14.Namespace is a concept to create cluster in kubernetes?
+a.True
+b.False
+
+b
+
+15.Kubernetes master also known as
+a.Control plane
+b.Owner
+c.Controller
+d. none
+
+a
+
+16.Which can be used as distributed db in kubernetes?
+a.zookeeper
+b.etcd
+c.consul
+d.All of above
+
+d
+
+17.Kubernetes need container run time on each of worker node?
+a.True
+b.False
+
+a
+
+18.Deployment is type of workload api in kubernetes?
+a.True
+b.False
+
+a
+
+19.which agent has to be installed on worker node?
+a.kubectl
+b.kubelet
+c.kubeadm
+d.none
+
+b
+
+20.which command will be used to create a pod?
+a.kubectl create -f <pod yaml>
+b.kubelet create -f <pod yaml>
+c.kubeadm create -f <pod yaml?
+d.none
+
+a
+
+
